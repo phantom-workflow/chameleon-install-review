@@ -1,0 +1,20 @@
+{
+  "name": "chameleon-operations-api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "migrate": "node src/migrate.js",
+    "seed": "node src/seed.js",
+    "bootstrap-admin": "node src/bootstrap-admin.js",
+    "lab:dry-run": "node src/lab-dry-run.js",
+    "test:runtime-guards": "node ../../tests/production-runtime-guards.mjs",
+    "test:woo-shadow": "node ../../tests/woo-shadow-production-shaped.mjs",
+    "test": "node /app/tests/customer-ops.test.js"
+  },
+  "dependencies": {
+    "pg": "^8.13.3",
+    "twilio": "6.1.1"
+  }
+}
