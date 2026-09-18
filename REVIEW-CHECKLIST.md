@@ -1,56 +1,57 @@
-# Pre-Install Review Checklist
+# Pre-Install Advice Checklist
 
-This checklist is intended for Kai/Chameleon review of the installation package.
+This is a prompt for Kai/Chameleon to give Phantom practical installation advice. It is not a request to certify the final host or approve a production cutover.
 
-## Host
+## Current environment
 
-- [ ] Full stack CPU requirement is acceptable.
-- [ ] Full stack RAM requirement is acceptable.
-- [ ] Disk/free-space requirement is acceptable.
-- [ ] Docker is installed and healthy.
-- [ ] Docker Compose v2 is available.
-- [ ] No material service/port conflicts identified.
-- [ ] Persistent-volume locations are acceptable.
-- [ ] Host backup/snapshot coverage is understood.
+Please note anything we should account for regarding:
 
-## Networking
+- [ ] Docker / Docker Compose conventions already in use
+- [ ] existing services or ports we should avoid
+- [ ] persistent-volume / database conventions
+- [ ] host backup or snapshot conventions
+- [ ] proxy / Cloudflare / tunnel conventions
+- [ ] current Chatwoot → Mac bridge → Kai/OpenClaw flow
+- [ ] current WooCommerce API/read-only access pattern
 
-- [ ] Loopback/internal service exposure is compatible with the host.
-- [ ] Reverse proxy assumptions are correct.
-- [ ] Cloudflare/tunnel assumptions are correct.
-- [ ] Existing Chatwoot/Kai/OpenClaw paths remain untouched by base install.
-- [ ] Shadow event mirroring cannot become an accidental second response path.
+## Shadow integration
 
-## Data and integrations
+Please flag anything that could make these assumptions wrong:
 
-- [ ] Woo read-only access path is appropriate.
-- [ ] Chatwoot event/replay identifiers are understood.
-- [ ] Duplicate/retry behavior is understood.
-- [ ] Bounded reasoning-only Kai/OpenClaw path is feasible.
-- [ ] Twenty deployment/state requirements are acceptable.
+- [ ] existing customer-facing replies stay on today's path
+- [ ] Chameleon receives only an observational copy during shadow
+- [ ] Woo access is GET-only
+- [ ] Kai/OpenClaw is reasoning-only for the new path
+- [ ] duplicate/retry behavior is understood
+- [ ] Chameleon cannot accidentally become a second reply path
+- [ ] failure of Chameleon OS leaves current operations available
 
-## Recovery
+## Twenty / host planning
 
-- [ ] Operations PostgreSQL backup path is acceptable.
-- [ ] Twenty backup/state path is acceptable.
-- [ ] Restore process is understood.
-- [ ] Immutable rollback images/build identity are understood.
-- [ ] Failure of Chameleon OS leaves the existing day-to-day workflow available.
+Twenty is part of the stack Phantom is bringing.
 
-## Rollout expectations
+Please tell us:
 
-- [ ] Tomorrow is install + verify + viewing, not operational cutover.
-- [ ] Existing support path stays authoritative during shadow.
-- [ ] Initial shadow window is approximately 3–4 days and may be extended.
-- [ ] No automatic cutover occurs at the end of the observation window.
-- [ ] Production authority moves workflow-by-workflow only after joint review.
+- [ ] any obvious reason it should not share the proposed host
+- [ ] storage/volume constraints we should plan for
+- [ ] networking/port conventions we should respect
+- [ ] CPU/RAM/disk facts you want measured before install
 
-## Review result
+## Rollout expectation
 
-Use one of:
+- [ ] tomorrow is install + verify + viewing, not operational cutover
+- [ ] existing support remains authoritative during shadow
+- [ ] initial shadow observation is approximately 3–4 days and may be extended
+- [ ] there is no automatic cutover after that period
+- [ ] workflows move gradually only after joint review
 
-- **PASS** — no material install blocker identified.
-- **PARTIAL** — install may proceed only after listed items are resolved.
-- **NO-GO** — a specific host/integration/recovery risk should be fixed before installation.
+## Requested output
 
-Please identify concrete conflicts or missing assumptions rather than sending credentials or customer data.
+A short Markdown review is enough:
+
+1. **Environment facts we should know**
+2. **Install advice / conflicts to avoid**
+3. **Items to measure during preflight**
+4. **Any assumption in the repo that differs from reality**
+
+No credentials, tokens, customer data, or private secrets should be included.
