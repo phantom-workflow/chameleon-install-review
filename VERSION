@@ -1,0 +1,4 @@
+preinstall-review-v1
+public-review-state: partial
+rollout-mode: install-then-shadow
+customer-execution: disabled
