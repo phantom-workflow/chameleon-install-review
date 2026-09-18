@@ -2,29 +2,29 @@
 
 ## Review objective
 
-Please review this repository as the package Phantom Workflow intends to install for Chameleon Operations.
+Please review the current Chameleon OS code and rollout plan and give us practical advice for tomorrow's install.
 
 The most important expectation is:
 
 > **Tomorrow is an installation and observation milestone, not a change to Chameleon's current day-to-day workflow.**
 
-The current support and operational paths should continue working exactly as they do today while the new Chameleon OS is installed beside them.
+The current WooCommerce / Chatwoot / Kai support path stays authoritative while Chameleon OS is installed beside it.
 
 ## Planned sequence
 
 ### A. Base installation
 
-Install and validate:
+Install and verify:
 
 - Chameleon Operations dashboard
 - Chameleon API
 - PostgreSQL operational database
-- Twenty CRM/deep-record workspace
-- required workers/supporting services
+- Twenty CRM / deep-record workspace
+- required supporting services
 - health checks
 - persistent storage
 - authentication
-- backup/restore
+- backup / restore
 - rollback
 
 No customer-facing production authority is granted by the base installation.
@@ -33,7 +33,7 @@ No customer-facing production authority is granted by the base installation.
 
 Once the base stack is healthy, connect bounded observational/read-only inputs.
 
-For approximately the next 3–4 days, initially:
+For approximately the next 3–4 days initially:
 
 ```text
 Real customer / operational event
@@ -50,46 +50,45 @@ Real customer / operational event
                            +-- record result
 ```
 
-The Chameleon OS shadow result is for comparison and monitoring.
-
-It must not become an accidental second response path.
+The Chameleon OS result is for comparison and monitoring. It must not become a second customer-response path.
 
 ### C. Joint review
 
-Phantom and Chameleon review:
+Phantom and Chameleon review what the system saw, what it would have done, where it disagreed with current handling, failures/missing context, Human Work decisions, and recovery evidence.
 
-- what the system saw;
-- what it would have done;
-- where it agreed/disagreed with existing handling;
-- failures and missing context;
-- automation candidates;
-- Human Work decisions;
-- safety/rollback evidence.
-
-Low traffic may require extending the shadow period or replaying sanitized representative historical cases.
+Low traffic may require extending the shadow period or using sanitized representative historical cases.
 
 ### D. Gradual production transition
 
-Only after review do we move selected workflows from the current path into Chameleon OS.
+There is no all-at-once cutover.
 
-This is intentionally gradual.
+Selected workflows move into Chameleon OS only after Chameleon and Phantom agree they are ready, beginning with bounded low-risk work.
 
-There is no planned "flip everything over" event.
+## Advice we want from Kai
 
-A workflow moves when Chameleon and Phantom agree it is ready, beginning with bounded, low-risk work and preserving Human Work for money, risk, ambiguous data, consequential actions, or meaningful judgment.
+Please use your knowledge of the real Chameleon environment to tell us anything we should account for before or during installation.
 
-## Please specifically tell us if
+Especially useful:
 
-- the proposed host is too small for the complete stack;
-- Twenty introduces resource or network constraints we have missed;
-- any Docker networks/ports/volumes collide with existing services;
-- our Cloudflare/reverse-proxy/tunnel assumptions are wrong;
-- mirroring Chatwoot events could interfere with the existing support route;
-- existing retry/webhook behavior could duplicate events;
-- a supposedly read-only/shadow path can trigger a production side effect;
-- Woo read-only integration should use a different mechanism;
-- bounded reasoning through the current Kai/OpenClaw setup needs a different interface;
-- our backup/rollback plan misses an important stateful component;
-- there is an important operational dependency not represented here.
+- existing Docker/service conventions we should respect;
+- ports, volumes, databases, proxy, Cloudflare, tunnel, or networking details we should avoid conflicting with;
+- whether our understanding of the current Chatwoot → Mac bridge → Kai/OpenClaw path is correct;
+- the safest way to mirror support activity without changing the existing reply path;
+- the safest WooCommerce read-only access pattern;
+- retry/replay behavior we should account for;
+- anything about the proposed Twenty deployment that affects host placement, storage, or networking;
+- what CPU/RAM/disk/port facts you want us to measure during the read-only host preflight;
+- any recovery/backup convention you want us to preserve;
+- any hidden dependency we should know about before installation.
 
-The desired outcome of the review is **no surprises during install and no disruption to Chameleon's current operations**.
+If something in our assumptions differs from reality, just tell us the actual setup or constraint and we will account for it.
+
+## Tonight's boundary
+
+**Review only.**
+
+Please do not install anything, restart anything, reconfigure services, create containers, change Docker/networking, touch Cloudflare, or make any other infrastructure change tonight.
+
+Detailed findings can go into the shared Drive Markdown review rather than Telegram.
+
+The goal is simple: **use Kai's environment knowledge to remove surprises before tomorrow's install without disturbing today's operation.**
