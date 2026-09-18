@@ -1,102 +1,96 @@
 # Chameleon OS — Installation Architecture
 
-## Operating model
+Chameleon OS is added **beside** the live path. WooCommerce, Chatwoot, and Kai stay authoritative during the initial rollout. The new stack observes, records, and recommends. It does not reply or execute customer-facing actions during shadow mode.
 
-Chameleon OS is being introduced as an **operating layer beside the existing Chameleon workflow**, not as an immediate replacement.
+```mermaid
+flowchart TB
+  subgraph live["Existing production — stays authoritative"]
+    C[Customer]
+    CW[Chatwoot<br/>conversation truth]
+    WOO[WooCommerce<br/>order truth]
+    MAC[Existing Mac bridge<br/>+ Kai / OpenClaw]
+    STAFF[Current staff / Kai handling]
+    C --> CW
+    CW --> MAC
+    MAC --> STAFF
+    WOO -.-> MAC
+  end
 
-```text
-                 EXISTING PRODUCTION
-                 remains authoritative
-                         |
-       +-----------------+------------------+
-       |                 |                  |
-  WooCommerce         Chatwoot         Kai / OpenClaw
- order truth      conversation truth     AI runtime
-       |                 |                  |
-       +----------- observational ----------+
-                         |
-                         v
-                 CHAMELEON OS
-              initial SHADOW mode
-                         |
-        +----------------+----------------+
-        |                |                |
-   Operations API   Operations UI      Twenty
-   + PostgreSQL      / Human Work     deep record
-        |
-   provenance / audit /
-   idempotency / health
+  subgraph add["New: Chameleon OS — install then shadow"]
+    API[Operations API + PostgreSQL<br/>cases, audit, idempotency]
+    UI[Operations dashboard<br/>Human Work]
+    CRM[Twenty<br/>CRM / deep record — not the ledger]
+    API --> UI
+    API --> CRM
+  end
+
+  CW -.->|observational copy<br/>existing reply path unchanged| API
+  WOO -.->|HTTPS GET-only<br/>orders / context| API
+  API -.->|bounded reasoning only<br/>no new OpenClaw install| MAC
+
+  live -->|"customer-facing replies stay here"| STAFF
+  add -->|"view + compare until jointly approved"| UI
 ```
 
-## What Phantom installs
+## What is new on the host
 
-The intended Chameleon-controlled stack is:
+- Chameleon Operations dashboard
+- Chameleon API
+- PostgreSQL operational database
+- Twenty
+- supporting integration workers
+- health, backup, restore, and rollback tooling
 
-```text
-Chameleon OS host
-├── Chameleon Operations Dashboard
-├── Chameleon API
-├── Chameleon PostgreSQL
-├── Twenty
-│   └── required Twenty state/services
-├── bounded integration workers
-└── health / backup / rollback tooling
+The intended application exposure is loopback/private rather than a new public Chameleon application endpoint.
+
+## What does not change during the initial install
+
+- Chatwoot remains the customer-conversation truth.
+- WooCommerce remains order/commerce truth.
+- Kai/OpenClaw keeps its current live-support authority.
+- The existing customer-facing reply path remains active.
+- Production workflows are not moved merely because the new stack is installed.
+
+## Shadow rule
+
+A copy of an event may enter Chameleon OS for context, classification, reasoning, Human Work routing, and audit.
+
+The live customer reply still leaves through the current Chatwoot/Kai path.
+
+`SUPPORT_MODE=shadow` and `NO_EXECUTION` remain the intended boundary.
+
+```mermaid
+sequenceDiagram
+  participant Event as Customer / ops event
+  participant Live as Current Chatwoot + Kai path
+  participant OS as Chameleon OS shadow
+  participant Woo as WooCommerce GET-only
+  participant KaiReason as Existing Kai reasoning
+
+  Event ->> Live: handled as today
+  Live -->> Event: customer-facing reply stays here
+  Event ->> OS: observational copy
+  OS ->> Woo: read order / tracking context
+  OS ->> KaiReason: bounded reasoning request
+  KaiReason -->> OS: structured recommendation
+  OS -->> OS: match, classify, Human Work, audit
+  Note over OS: no Chatwoot send, refund, label, or Woo mutation
 ```
-
-Chameleon PostgreSQL is operational authority for receipts, routing, Human Work, provenance, replay/idempotency, job health, approvals, and audit.
-
-Twenty is the CRM/deep-record projection. It is useful for customer/order/case navigation but is not the reliability ledger.
-
-## Tomorrow's boundary
-
-Tomorrow's target is:
-
-```text
-INSTALL → VERIFY → VIEW → SHADOW
-```
-
-not:
-
-```text
-INSTALL → REPLACE CURRENT OPERATIONS
-```
-
-The current customer-facing path remains active.
-
-## Shadow data flow
-
-```text
-Customer event
-     |
-     +------> existing production path ------> normal current handling
-     |
-     +------> Chameleon OS shadow
-                   |
-                   +-- identify customer/order
-                   +-- classify request
-                   +-- load approved context
-                   +-- obtain bounded reasoning
-                   +-- propose action/response
-                   +-- decide automation vs Human Work
-                   +-- record result + provenance
-```
-
-The shadow path is observational. It is not a second customer-response channel.
 
 ## Authority progression
 
-Production responsibility moves incrementally:
-
 ```text
-OBSERVE
+INSTALL
    ↓
-COMPARE
+VERIFY
    ↓
-REVIEW
+VIEW + SHADOW
    ↓
-APPROVE ONE WORKFLOW
+COMPARE REAL RESULTS
    ↓
-ENABLE NARROWLY
+JOINT REVIEW
+   ↓
+ENABLE ONE BOUNDED WORKFLOW
    ↓
 MONITOR / ROLLBACK IF NEEDED
    ↓
