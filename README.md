@@ -29,9 +29,9 @@ The immediate goal is to install the new operating layer **beside the existing p
 - [PROVENANCE.md](PROVENANCE.md) — source/provenance of the public review artifacts
 - [reference/current-proven-install/](reference/current-proven-install/) — current proven container and operational scripts
 
-Current real code available for inspection includes the API and dashboard Dockerfiles plus preflight, backup, restore, and rollback scripts.
+Current real code available for inspection now includes the Operations API, dashboard/BFF, authentication, Human Work and support routing, Chatwoot shadow ingress, Woo read-only shadow worker, Twenty projection/adapter, runtime guards, production-shadow tests, Dockerfiles, and backup/restore/rollback tooling.
 
-**Why the final Compose is not published yet:** the previous readiness Compose assumed an existing Twenty endpoint. Chameleon has no existing Twenty deployment; Phantom is bringing Twenty. We are correcting that topology before publishing the Compose Kai will actually review and we will actually install.
+**Why the final Compose is not published yet:** the previous readiness Compose assumed an existing Twenty endpoint. Chameleon has no existing Twenty deployment; Phantom is bringing Twenty. We are correcting that topology before publishing the Compose Kai will actually review and we will actually install. The application/runtime source is available now so Kai can review behavior and integration boundaries independently of that final host topology.
 
 ## Rollout expectation
 
@@ -135,24 +135,23 @@ During the initial rollout:
 
 Chameleon OS initially observes and coordinates around those systems rather than replacing them.
 
-## What we want Kai to review
+## What we want Kai to review tonight
 
-Kai: please review the actual package in this repository against the real Chameleon environment and flag anything likely to cause install or shadow-mode problems.
+Kai: please treat tonight as a **read-only code, operating-model, and dependency review**. The repository now contains the relevant application/runtime source, but the corrected bundled-Twenty Compose and measured host resource envelope are still separate pre-install gates.
 
 In particular, please challenge:
 
-1. CPU/RAM/disk capacity for the full stack, including Twenty.
-2. Docker/Compose compatibility.
-3. Port, container, network, volume, database, cron, or service conflicts.
-4. Reverse proxy / Cloudflare / tunnel assumptions.
-5. Backup/snapshot and rollback boundaries.
-6. Our understanding of the existing Chatwoot -> support bridge -> OpenClaw path.
-7. The safest way to mirror support events without changing the current response path.
-8. Retry/replay behavior that could create duplicates.
-9. The safest bounded read-only WooCommerce access.
-10. Whether existing support intelligence can expose a reasoning-only interface without broader Kai authority.
-11. Health/logging signals Chameleon OS should monitor.
-12. Any hidden production dependency or failure mode we have missed.
+1. Whether the code preserves the existing WooCommerce / Chatwoot / Kai path during shadow.
+2. Whether the Chatwoot shadow-ingress design can observe without becoming a second reply path.
+3. Whether the Woo shadow worker is appropriately read-only/bounded.
+4. Whether the support-agent/OpenClaw boundary is narrow enough for shadow operation.
+5. Whether retry/replay/idempotency behavior matches the real environment.
+6. Whether our understanding of the existing Chatwoot -> support bridge -> OpenClaw path is directionally correct.
+7. Whether introducing Twenty as a Phantom-managed component creates an obvious architectural concern.
+8. What proxy, Cloudflare, tunnel, Docker, backup, or service conventions the final install must respect.
+9. What exact host CPU/RAM/disk/port facts should be measured during tomorrow's preflight before starting the install.
+
+The current public tree is **not claiming measured host-fit certification yet**; that requires the final Compose/resource envelope plus a read-only inspection of the chosen host.
 
 Please do not post passwords, tokens, API keys, customer data, or other secrets in issues or review comments.
 
