@@ -2,7 +2,7 @@
 
 > **Tomorrow does not change Chameleon's current day-to-day operations.**
 
-This repository contains the sanitized installation package and review material for the initial Chameleon Operations / Chameleon OS rollout.
+This repository contains the sanitized **pre-install review package** for the initial Chameleon Operations / Chameleon OS rollout.
 
 The immediate goal is to install the new operating layer **beside the existing production workflow**, verify that it is healthy, and observe how it would handle real work. It is **not** a next-day replacement of the systems or processes Chameleon currently relies on.
 
@@ -31,7 +31,7 @@ The immediate goal is to install the new operating layer **beside the existing p
 
 Current real code available for inspection now includes the Operations API, dashboard/BFF, authentication, Human Work and support routing, Chatwoot shadow ingress, Woo read-only shadow worker, Twenty projection/adapter, runtime guards, production-shadow tests, Dockerfiles, and backup/restore/rollback tooling.
 
-**Why the final Compose is not published yet:** the previous readiness Compose assumed an existing Twenty endpoint. Chameleon has no existing Twenty deployment; Phantom is bringing Twenty. We are correcting that topology before publishing the Compose Kai will actually review and we will actually install. The application/runtime source is available now so Kai can review behavior and integration boundaries independently of that final host topology.
+**Remaining pre-install gate:** the final host Compose/resource envelope is being finalized around the bundled Twenty deployment. The application/runtime source is available now so Kai can review behavior and integration boundaries tonight; the final host-fit check happens during the read-only preflight before install.
 
 ## Rollout expectation
 
@@ -139,7 +139,7 @@ Chameleon OS initially observes and coordinates around those systems rather than
 
 Kai: please treat tonight as a **read-only code, operating-model, and dependency review**. The repository now contains the relevant application/runtime source, but the corrected bundled-Twenty Compose and measured host resource envelope are still separate pre-install gates.
 
-In particular, please challenge:
+In particular, please advise us on:
 
 1. Whether the code preserves the existing WooCommerce / Chatwoot / Kai path during shadow.
 2. Whether the Chatwoot shadow-ingress design can observe without becoming a second reply path.
