@@ -6,6 +6,33 @@ This repository contains the sanitized installation package and review material 
 
 The immediate goal is to install the new operating layer **beside the existing production workflow**, verify that it is healthy, and observe how it would handle real work. It is **not** a next-day replacement of the systems or processes Chameleon currently relies on.
 
+## Executive summary
+
+| Question | Answer |
+|---|---|
+| Are we changing normal customer-support operations tomorrow? | **No.** |
+| Will the existing support path keep running? | **Yes.** |
+| Will Chameleon OS be installed and viewable? | **Yes.** |
+| Will it observe real workflow in shadow? | **Yes, after the base install is verified.** |
+| Will it independently message customers or take consequential actions? | **No.** |
+| Initial observation window? | **About 3–4 days, longer if traffic is too light.** |
+| Automatic cutover after that period? | **No.** |
+| How does production adoption happen? | **Workflow-by-workflow, after joint review and agreement.** |
+| Is Twenty already installed at Chameleon? | **No. Phantom is bringing it.** |
+
+## Review map
+
+- [INSTALL-REVIEW.md](INSTALL-REVIEW.md) — Kai's pre-install review brief
+- [ARCHITECTURE.md](ARCHITECTURE.md) — intended system and shadow-mode data flow
+- [STATUS.md](STATUS.md) — proven vs still in final reconciliation
+- [CODE-REVIEW-SCOPE.md](CODE-REVIEW-SCOPE.md) — what code is public and why
+- [PROVENANCE.md](PROVENANCE.md) — source/provenance of the public review artifacts
+- [reference/current-proven-install/](reference/current-proven-install/) — current proven container and operational scripts
+
+Current real code available for inspection includes the API and dashboard Dockerfiles plus preflight, backup, restore, and rollback scripts.
+
+**Why the final Compose is not published yet:** the previous readiness Compose assumed an existing Twenty endpoint. Chameleon has no existing Twenty deployment; Phantom is bringing Twenty. We are correcting that topology before publishing the Compose Kai will actually review and we will actually install.
+
 ## Rollout expectation
 
 The rollout has three distinct stages:
