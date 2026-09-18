@@ -1,6 +1,6 @@
 # Source Snapshot
 
-This public review repository contains selected current runtime source from the private Chameleon engineering repository plus the previously proven Friday install tooling.
+This public review repository contains a near-complete current Operations API/dashboard runtime snapshot from the private Chameleon engineering repository, selected shadow/runtime tests and runbooks, Twenty provisioning code, plus the previously proven Friday install tooling.
 
 ## Current application/runtime source
 
@@ -14,10 +14,11 @@ Application/runtime snapshot ref:
 
 Published from that snapshot:
 
-- `apps/api/` runtime and production-relevant migrations, excluding synthetic/demo-only seed paths;
+- `apps/api/` runtime and migrations, including synthetic/LAB compatibility fixtures needed for a coherent source snapshot;
 - `apps/dashboard/` operator UI, BFF/auth/runtime/config source;
 - selected shadow/runtime verification tests;
-- shadow-connection and Kai/OpenClaw shadow runbooks.
+- shadow-connection and Kai/OpenClaw shadow runbooks;
+- `tools/twenty/` provisioning tool and Chameleon Twenty manifest.
 
 ## Install tooling source
 
@@ -40,7 +41,8 @@ The export intentionally excludes:
 - private Git history;
 - production credentials/runtime env files;
 - customer data and database dumps;
-- synthetic/demo-only seed code not needed for install review;
 - the stale Friday Compose that assumed a pre-existing Twenty instance.
+
+Synthetic fixture values such as `+1555...`, `example.test`, and `test.local` are intentionally non-production test data.
 
 The corrected bundled-Twenty Compose is a separate pre-install gate and will replace that stale topology before installation.
