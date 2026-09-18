@@ -17,13 +17,13 @@
 - explicit separation of INSTALL, SHADOW, and future authoritative execution;
 - no customer-facing execution in the initial rollout.
 
-## In final reconciliation before install
+## Remaining pre-install gates
 
 - one complete Compose topology that bundles Twenty;
 - complete Twenty state/backup handling;
-- sanitized environment contract;
+- final top-level environment contract;
 - final install/health command wrapper;
-- exact source/version manifest.
+- measured host resource/port envelope.
 
 ## Intentional decision
 
@@ -31,7 +31,7 @@ A known-stale Compose file was **not** published merely to make this repository 
 
 That Compose expected an external Twenty instance. Chameleon has no such existing deployment; Phantom is bringing Twenty.
 
-The install package is being corrected before publication so the code Kai reviews is the code we actually intend to run.
+The application/runtime code Kai is reviewing is published. The final host topology is a separate pre-install gate because Twenty is part of the stack Phantom is bringing.
 
 ## Rollout expectation
 
