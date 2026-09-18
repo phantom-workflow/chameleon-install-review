@@ -61,7 +61,9 @@ This review package does not expose:
 - database dumps;
 - SSH keys;
 - private host identifiers;
-- unrelated business logic or test fixtures;
+- real customer data or production runtime artifacts;
 - internal development notes.
 
-The goal is enough real code to review the installation safely, not a public copy of the entire private engineering repository.
+Synthetic/LAB fixtures are present where they are part of the runtime/test tree; they use non-production values.
+
+The goal is enough real code to review the installation and shadow behavior safely, without exposing private history, credentials, customer data, or unrelated internal project material.
