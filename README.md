@@ -27,6 +27,8 @@ The immediate goal is to install the new operating layer **beside the existing p
 - [STATUS.md](STATUS.md) — proven vs still in final reconciliation
 - [CODE-REVIEW-SCOPE.md](CODE-REVIEW-SCOPE.md) — what code is public and why
 - [PROVENANCE.md](PROVENANCE.md) — source/provenance of the public review artifacts
+- [SOURCE-SNAPSHOT.md](SOURCE-SNAPSHOT.md) — exact private source refs used for the public code snapshot
+- [EXPORT-AUDIT.md](EXPORT-AUDIT.md) — public export/secret-data scan and intentional omissions
 - [reference/current-proven-install/](reference/current-proven-install/) — current proven container and operational scripts
 
 Current real code available for inspection now includes the Operations API, dashboard/BFF, authentication, Human Work and support routing, Chatwoot shadow ingress, Woo read-only shadow worker, Twenty projection/adapter, runtime guards, production-shadow tests, Dockerfiles, and backup/restore/rollback tooling.
