@@ -6,14 +6,14 @@ It intentionally exposes the code that determines how the system is built, start
 
 ## Included for review now
 
-The `reference/current-proven-install/` directory contains production-shaped pieces already proven in isolated validation:
+The public repository now includes a sanitized snapshot of the actual runtime source Kai will receive tomorrow:
 
-- API Dockerfile
-- dashboard Dockerfile
-- preflight script
-- Chameleon Operations PostgreSQL backup script
-- restore script
-- immutable image rollback script
+- `apps/api/` — operational API, auth, support routing, Chatwoot shadow ingress, Woo shadow worker, Twenty projection, runtime guards, and database migrations;
+- `apps/dashboard/` — operator UI, BFF routes, authentication/session handling, runtime health, and user management;
+- `tests/` — production runtime guard, Woo shadow, OpenClaw shadow, and Friday production-shadow proof;
+- `docs/runbooks/` — shadow-connection and Kai support-shadow runbooks;
+- `infra/customer-ops/` — production-shaped API Dockerfile plus preflight, backup, restore, and rollback scripts;
+- `reference/current-proven-install/` — frozen copies of the previously proven install-facing pieces.
 
 These files are here specifically so Kai can inspect:
 
@@ -42,14 +42,14 @@ That corrected Compose becomes the primary install artifact before installation.
 
 ## What will be added before install
 
-- full Compose topology including Twenty;
-- sanitized `.env.example`;
+- corrected full Compose topology including bundled Twenty;
+- final top-level sanitized environment contract;
 - pinned Twenty runtime configuration;
-- Twenty provisioning;
+- Twenty provisioning/deployment definition;
 - complete-stack health checks;
-- complete-stack install script;
+- complete-stack install wrapper;
 - backup/restore coverage for both Chameleon Operations and Twenty state;
-- version/source manifest.
+- final version/source manifest and measured host resource envelope.
 
 ## What is intentionally not public
 
