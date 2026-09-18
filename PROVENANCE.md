@@ -8,7 +8,11 @@ Canonical engineering repository:
 
 `phantom-workflow/chameleon-operations` — private
 
-Current public review material was derived from reviewed private repository state, including the Friday production-readiness work and current project architecture.
+Current application/runtime source in this public review was exported from:
+
+`main@9d8980e915c8651cc25031cda147836deb908812`
+
+Install-facing scripts/reference files were derived from the Friday production-readiness work and current project architecture.
 
 The install-facing reference files under `reference/current-proven-install/` were copied from:
 
