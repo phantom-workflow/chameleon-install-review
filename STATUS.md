@@ -6,6 +6,12 @@
 
 ## Proven / included
 
+- current Operations API source snapshot from private `main`;
+- current Operations dashboard/BFF source snapshot;
+- authentication, Human Work, support routing, Chatwoot shadow ingress, Woo shadow worker, OpenClaw/support-agent boundary, and Twenty projection code;
+- current database migrations and synthetic/LAB fixtures required to keep the source tree coherent;
+- Twenty provisioning tool and manifest;
+- production-shadow/runtime verification tests and shadow runbooks;
 - production-shaped API container definition;
 - production-shaped dashboard container definition;
 - non-root application runtime;
